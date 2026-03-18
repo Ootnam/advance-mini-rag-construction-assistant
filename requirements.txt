@@ -1,0 +1,9 @@
+sentence-transformers
+faiss-cpu
+streamlit
+numpy
+requests
+transformers
+accelerate
+langchain-text-splitters
+protobuf==3.20.3
