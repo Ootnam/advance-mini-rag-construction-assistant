@@ -74,7 +74,7 @@ Answer:
         )
 
         result = generator(prompt, max_length=200)
-        return result[0]["generated_text"]
+        return result[0]["generated_text"].replace("-", "\n-")
 
     def compare_models(self, query):
         retrieved = self.retrieve(query)
