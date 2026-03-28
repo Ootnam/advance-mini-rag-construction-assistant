@@ -2,18 +2,19 @@ import os
 import re
 from langchain_text_splitters import MarkdownTextSplitter
 
-def load_documents(folder="data"):
-    docs = []
+for file in os.listdir(folder):
+    if file.endswith(".md"):
+        docs = []
 
-    for file in os.listdir(folder):
-        if file.endswith(".md") or file.endswith(".txt"):
-            with open(os.path.join(folder, file), "r", encoding="utf-8") as f:
-                content = f.read()
+        for file in os.listdir(folder):
+            if file.endswith(".md") or file.endswith(".txt"):
+                with open(os.path.join(folder, file), "r", encoding="utf-8") as f:
+                    content = f.read()
 
-                # remove numbering like 1), 2)
-                content = re.sub(r"\d+\)", "", content)
+                    # remove numbering like 1), 2)
+                    content = re.sub(r"\d+\)", "", content)
 
-                docs.append(content)
+                    docs.append(content)
 
     return docs
 
