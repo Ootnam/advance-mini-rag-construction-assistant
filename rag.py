@@ -2,6 +2,7 @@ from sentence_transformers import SentenceTransformer, CrossEncoder
 import numpy as np
 import faiss
 import requests
+import os
 
 class MiniRAG:
     def __init__(self, chunks):
@@ -51,7 +52,7 @@ Answer:
         response = requests.post(
             url="https://openrouter.ai/api/v1/chat/completions",
             headers={
-                "Authorization": "Bearer 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",
+                "Authorization": f"Bearer {os.getenv('OPENROUTER_API_KEY')}",
                 "Content-Type": "application/json"
             },
             json={
