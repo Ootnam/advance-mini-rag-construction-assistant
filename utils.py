@@ -2,20 +2,28 @@ import os
 import re
 from langchain_text_splitters import MarkdownTextSplitter
 
-for file in os.listdir(folder):
-    if file.endswith(".md"):
-        docs = []
 
-        for file in os.listdir(folder):
-            if file.endswith(".md") or file.endswith(".txt"):
-                with open(os.path.join(folder, file), "r", encoding="utf-8") as f:
-                    content = f.read()
+def load_documents(folder="data"):
+    docs = []
 
-                    # remove numbering like 1), 2)
-                    content = re.sub(r"\d+\)", "", content)
+    # Safety check (important for Streamlit Cloud)
+    if not os.path.exists(folder):
+        print("Folder not found:", folder)
+        return []
 
-                    docs.append(content)
+    for file in os.listdir(folder):
+        if file.endswith(".md") or file.endswith(".txt"):
+            file_path = os.path.join(folder, file)
 
+            with open(file_path, "r", encoding="utf-8") as f:
+                content = f.read()
+
+                # remove numbering like 1), 2)
+                content = re.sub(r"\d+\)", "", content)
+
+                docs.append(content)
+
+    print("Loaded documents:", len(docs))
     return docs
 
 
@@ -26,4 +34,5 @@ def chunk_documents(docs):
     for doc in docs:
         chunks.extend(splitter.split_text(doc))
 
+    print("Total chunks:", len(chunks))
     return chunks
